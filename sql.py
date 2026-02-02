@@ -1,18 +1,43 @@
-from google import genai
+from groq import Groq
+import streamlit as st
 
-genai.configure(api_key="AIzaSyA0qj7AoWiAuG03rhrgTAG0uuqt9mjoBK8")
+# Create groq using hidden API key
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
-model = genai.GenerativeModel(model_name="models/gemini-2.0-flash")
+def generate_sql(question, schema_description):
+    prompt = f"""
+You are a smart assistant that understands casual daily English
+and converts it into SQLite SQL queries.
 
-def generate_sql(prompt, schema_description):
-    full_prompt = f"""
-You are an AI assistant that converts natural language into SQL queries.
-Here is the database schema:
+Your task:
+1. Understand informal / vague / daily English
+2. Infer missing details using common sense
+3. Convert it into a valid SQLite SQL query
 
+STRICT RULES:
+- Output ONLY SQL
+- No explanation
+- No markdown
+- No English text
+- Start directly with SELECT
+
+Database schema:
 {schema_description}
 
-Convert the following question into a valid SQL query:
-\"{prompt}\"
+User question (casual English):
+{question}
 """
-    response = model.generate_content(full_prompt)
-    return response.text.strip()
+
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0
+
+    )
+
+    return response.choices[0].message.content.strip()
+
+
+
