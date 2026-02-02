@@ -1,7 +1,7 @@
 from groq import Groq
 import streamlit as st
 
-# Create groq using hidden API key
+# Create Groq client using secret
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 def generate_sql(question, schema_description):
@@ -34,10 +34,6 @@ User question (casual English):
             {"role": "user", "content": prompt}
         ],
         temperature=0
-
     )
 
     return response.choices[0].message.content.strip()
-
-
-
