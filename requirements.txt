@@ -2,4 +2,4 @@ streamlit
 openai
 python-dotenv
 pandas 
-google-generativeai
+google-genai
