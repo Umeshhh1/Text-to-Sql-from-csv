@@ -1,8 +1,8 @@
-import google.generativeai as genai
+from google import genai
 
 genai.configure(api_key="AIzaSyA0qj7AoWiAuG03rhrgTAG0uuqt9mjoBK8")
 
-model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")
+model = genai.GenerativeModel(model_name="models/gemini-2.0-flash")
 
 def generate_sql(prompt, schema_description):
     full_prompt = f"""
