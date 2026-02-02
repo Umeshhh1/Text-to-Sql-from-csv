@@ -3,3 +3,4 @@ openai
 python-dotenv
 pandas 
 google-genai
+groq
