@@ -1,9 +1,8 @@
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyA0qj7AoWiAuG03rhrgTAG0uuqt9mjoBK8")
+genai.configure(api_key="AIzaSyB5e3pbr3bZKY0gr7GhWOULZuafoHIliRk")
 
-model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")
-
+model = genai.GenerativeModel(model_name="gemini-3-flash")
 def generate_sql(prompt, schema_description):
     full_prompt = f"""
 You are an AI assistant that converts natural language into SQL queries.
