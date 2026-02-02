@@ -3,7 +3,6 @@ import pandas as pd
 import sqlite3
 import os
 import groq
-from google.api_core import exceptions
 from sql import generate_sql
 
 # ------------------ CONSTANTS ------------------
@@ -99,13 +98,8 @@ if uploaded_file:
                         st.dataframe(result_df, use_container_width=True)
                     else:
                         st.info("No results found for this query.")
-
-                except exceptions.ResourceExhausted:
-                    st.error(
-                        "🚨 **Quota Exceeded (429)**\n\n"
-                        "Please wait a minute or switch to another model "
-                        "(e.g., `gemini-1.5-pro`) in `sql.py`."
-                    )
+                except Exception as e:
+                    st.error(f"❌ Error executing query: {e}")       
                 except sqlite3.Error as db_err:
                     st.error(f"❌ SQL Execution Error:\n{db_err}")
                 except Exception as e:
